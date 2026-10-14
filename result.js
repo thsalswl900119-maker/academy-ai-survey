@@ -22,7 +22,7 @@ function askCode(msg){
 const SAMPLE=(()=>{const p=(a,i)=>a[i%a.length];return Array.from({length:12},(_,i)=>({role:p(['원장님','원장님','선생님(강사)'],i),subject:p([['수학'],['외국어 (영어·일본어·중국어)'],['국어 (국어·논술·독서)','초등 종합 (보습)'],['수학','과학']],i),grade:p([['초등부','중등부'],['중등부','고등부'],['초등부']],i),exp:p(['거의 처음이었어요','가끔 써 봤어요','거의 처음이었어요','자주 써요'],i),
   sat:p([5,5,4,5,4],i),und:p([4,5,4,5,3],i),prac:p([4,4,3,5,3,5],i),use:p([5,4,5,4],i),rec:p([5,4,5],i),best:p(['AI로 우리 학원 맞춤 문제 만들기','카페스이 AI 활용 사례','AI 프롬프트','브랜딩 · 마케팅 (채널별)'],i),
   hard:p(['[예시] 학원 카드 저장하는 부분이 헷갈렸어요','','[예시] 노트북이 느려서 실습을 놓쳤어요',''],i),want:p([['문제·시험지 만들기','학부모 상담·안내문'],['출결·성적 관리','블로그·인스타·플레이스 홍보'],['오답 관리·클리닉','문제·시험지 만들기']],i),
-  pain:p(['[예시] 시험 기간 문제지 만들기','[예시] 학부모 상담 문자',''],i),next:p([['우리 학원 시스템 만들기 (출결·성적)'],['문제·교안 제작 심화','우리 학원 시스템 만들기 (출결·성적)'],['블로그·인스타·플레이스 마케팅 심화']],i),
+  pain:p(['[예시] 시험 기간 문제지 만들기','[예시] 학부모 상담 문자',''],i),next:p([['채점 자동화 (학생별 강점·약점 분석)'],['교육청 서류·지침 한데 모으기','출결 관리'],['학생 상담 기록지','채점 자동화 (학생별 강점·약점 분석)']],i),
   paid:p(['네, 참여하고 싶어요','커리큘럼 보고 정할게요','네, 참여하고 싶어요','지금은 어려워요'],i),slot:p([['평일 오전'],['평일 오전','주말'],['평일 오후']],i),msg:p(['[예시] 다음 수업도 꼭 듣고 싶어요','','[예시] 실습 시간이 더 있으면 좋겠어요'],i),at:''}))})();
 const f1=x=>x==null||isNaN(x)?'–':x.toFixed(1);
 function tally(data,q){const c=Object.fromEntries(q.opts.map(o=>[o,0]));let n=0;for(const r of data){const v=q.multi?(r[q.k]||[]):(r[q.k]?[r[q.k]]:[]);if(v.length)n++;v.forEach(o=>c[o]=(c[o]||0)+1)}return {n,list:Object.entries(c).sort((a,b)=>b[1]-a[1])}}
@@ -69,7 +69,7 @@ function aiPrompt(data,S,T){let s=`당신은 성인 대상 실무 강의를 평�
   for(const q of QS.filter(q=>q.type==='star'))s+=`- ${q.label}: ${f1(S[q.k].a)} (5점→1점 인원: ${[...S[q.k].d].reverse().join('/')})\n`;
   for(const q of QS.filter(q=>q.opts))s+=`\n[${q.t}]\n`+T[q.k].list.map(([o,v])=>`- ${o}: ${v}명`).join('\n')+'\n';
   for(const q of QS.filter(q=>q.type==='text'))s+=`\n[${q.t}]\n`+(data.map(r=>r[q.k]).filter(Boolean).map(t=>'- '+t).join('\n')||'- 없음')+'\n';
-  return s+`\n요청:\n1. 잘된 점 3가지, 보완할 점 3가지를 숫자 근거와 함께 정리\n2. 주관식 의견을 주제별로 묶어 건수와 함께 정리\n3. 원장님들이 가장 원하는 업무를 바탕으로 유료 정규 수업 「우리 학원 시스템 만들기」 4회차 커리큘럼 초안 (회차/주제/실습 결과물 표)\n4. 응답에서 확인되지 않는 내용은 지어내지 말고 "확인 필요"로 표시`}
+  return s+`\n요청:\n1. 잘된 점 3가지, 보완할 점 3가지를 숫자 근거와 함께 정리\n2. 주관식 의견을 주제별로 묶어 건수와 함께 정리\n3. 원장님들이 가장 원하는 업무를 바탕으로 항목별 유료 수업(교육청 서류·지침 / 출결 관리 / 학생 상담 기록지 / 채점 자동화) 중 먼저 열 순서와 각 항목 커리큘럼 초안 (항목/회차/실습 결과물 표)\n4. 응답에서 확인되지 않는 내용은 지어내지 말고 "확인 필요"로 표시`}
 async function copy(text,ok){const m=document.getElementById('msg');try{await navigator.clipboard.writeText(text);m.textContent=ok}catch(e){m.textContent='복사가 막혀 있어요. 아래 내용을 직접 선택해 복사해 주세요.';const p=document.createElement('textarea');p.value=text;p.rows=8;m.after(p);p.select()}}
 load();
 setInterval(()=>{if(getCode())load()},15000);
