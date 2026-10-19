@@ -68,7 +68,7 @@ async function save(){
 function renderDone(){
   app.innerHTML=`<div class="done">${CUP(84)}<h1 style="font-size:26px;margin-top:6px">소중한 의견 고맙습니다!</h1><p class="hint" style="font-size:14px;color:var(--ink-2)">이어서 Q&amp;A 시간이에요. 궁금한 건 편하게 물어봐 주세요.</p>
     ${saved?'':`<p class="notice">인터넷 연결 문제로 응답이 저장되지 않았어요. 처음으로 돌아가 다시 제출해 주세요.</p>`}
-    <div class="ticket" style="margin-top:12px"><header>NEXT CLASS</header><div class="body"><b style="font-family:var(--serif);font-size:21px">우리 학원 시스템 정리하고 한데 모으기</b><span class="hint" style="color:var(--ink-2)">교육청 서류·지침 · 출결 관리 · 학생 상담 기록지 · 채점 자동화 · 항목별로 신청</span></div><div class="cut"></div>
+    <div class="ticket" style="margin-top:12px"><header>NEXT CLASS</header><div class="body"><b style="font-family:var(--serif);font-size:21px">우리 학원 시스템 정리하고 한데 모으기</b><span class="hint" style="color:var(--ink-2)">운영 · 수업 · 브랜드·마케팅 7개 항목 · 수업자료 만들기 · 우리 학원 링크 배포까지 · 항목별로 신청</span></div><div class="cut"></div>
     <div class="body"><div class="line"><span>안내</span><b>${ans.agree&&ans.phone?'남겨 주신 번호로 먼저 연락드려요':'원데이 클래스 수강생께 먼저'}</b></div><div class="line"><span>강사</span><b>손민지 · 카페스이 대표</b></div></div></div>
     <div style="flex:1"></div><p class="hint" style="padding-top:24px">남겨 주신 이야기 꼼꼼히 읽고 더 좋은 수업으로 보답할게요</p>
     <button type="button" class="btn ghost" id="again" style="flex:none;padding:12px 18px;margin-top:10px">처음으로</button></div>`;
